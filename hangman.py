@@ -3,19 +3,43 @@ import random
 
 def main():
     lives = 5
-    # words = ["koulis", "kolotoumpa", "backpack", "sfurodrepano"]
-    # choice = random.choice(words)
-    choice = list("koulis")
-    print(f"H leksh exei {len(choice)} grammata")
+    words = ["koulis", "kolotoumpa", "backpack", "sfurodrepano"]
+    word = random.choice(words)
+    print(word)
+    choice = set(word)
+    myWord = []
+    guessedWord = []
+    for letter in word:
+        guessedWord.append("_")
+    print(f"The word has {len(word)} letters")
+    print(guessedWord)
     while lives > 0:
-        myWord = []
-        myLetter = input("Dose Gramma\n")
+        myLetter = input("Your Letter: \n")
         if myLetter in choice:
+            print("Letter is in word: {0} time(s)".format(word.count(myLetter)))
+            for ind in find_indices(word, myLetter):
+                guessedWord[ind] = myLetter
+            print(guessedWord)
             myWord.append(myLetter)
-            print(myWord)
+            if len(myWord) == len(choice):
+                print("You won!")
+                break
         else:
             lives -= 1
-            print(f"Apomenoun {lives} zwes")
+            if lives > 0:
+                print("Letter not in word")
+                print(f"Lives remaining: {lives} ")
+            else:
+                print("You lost")
+    print("Word was: " + word)
+
+
+def find_indices(word, letter):
+    indices = []
+    for idx, value in enumerate(word):
+        if value == letter:
+            indices.append(idx)
+    return indices
 
 
 main()

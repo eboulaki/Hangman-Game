@@ -16,6 +16,11 @@ def main():
     print(guessedWord)
     while lives > 0:
         myLetter = input("Your Letter: \n")
+        try:
+            is_valid(myLetter, guessedLetters)
+        except ValueError as error:
+            print(error)
+            continue
         if is_valid(myLetter, guessedLetters):
             guessedLetters.append(myLetter)
             if myLetter in choice:
@@ -47,14 +52,11 @@ def find_indices(word, letter):
 
 def is_valid(myLetter, guessedLetters) -> bool:
     if not myLetter.isalpha():
-        print("Please, enter a letter")
-        return False
+        raise ValueError("Please, enter a letter")
     elif myLetter in guessedLetters:
-        print("You have already guessed ", myLetter)
-        return False
+        raise ValueError("You have already guessed ", myLetter)
     elif len(myLetter) > 1:
-        print("Please, enter only 1 character per guess")
-        return False
+        raise ValueError("Please, enter only 1 character per guess")
     else:
         return True
 
